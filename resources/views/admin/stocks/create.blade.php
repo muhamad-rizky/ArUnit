@@ -33,10 +33,10 @@
                     'hpp' => ['label' => 'HPP', 'type' => 'number'],
                     'lokasi' => ['label' => 'LOKASI', 'type' => 'text'],
                     'estimasi_unit_masuk_gudang_dca' => ['label' => 'ESTIMASI MASUK GUDANG', 'type' => 'text'],
-                    'status' => ['label' => 'STATUS', 'type' => 'text'],
+                    'status' => ['label' => 'STATUS', 'type' => 'select', 'options' => ['free' => 'Free', 'matching' => 'Matching', 'sold' => 'Sold']],
                     'lain_lain' => ['label' => 'LAIN-LAIN', 'type' => 'text'],
                     'penjualan' => ['label' => 'PENJUALAN', 'type' => 'text'],
-                    'tanggal_matching_do' => ['label' => 'TANGGAL MATCHING/DO', 'type' => 'text'],
+                    'tanggal_matching_do' => ['label' => 'TANGGAL MATCHING/DO', 'type' => 'date'],
                     'cabang' => ['label' => 'CABANG', 'type' => 'text'],
                     'keterangan' => ['label' => 'KETERANGAN', 'type' => 'text'],
                     'unit' => ['label' => 'UNIT', 'type' => 'text'],
@@ -46,8 +46,17 @@
             @foreach($fields as $name => $field)
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
-                    <input type="{{ $field['type'] }}" name="{{ $name }}" id="{{ $name }}" value="{{ old($name) }}"
-                           style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box;">
+                    @if(isset($field['type']) && $field['type'] === 'select')
+                        <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box;">
+                            <option value="">-- Pilih {{ $field['label'] }} --</option>
+                            @foreach($field['options'] as $val => $text)
+                                <option value="{{ $val }}" {{ old($name) == $val ? 'selected' : '' }}>{{ $text }}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <input type="{{ $field['type'] }}" name="{{ $name }}" id="{{ $name }}" value="{{ old($name) }}"
+                               style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box;">
+                    @endif
                     @error($name)
                         <span style="color:#ef4444; font-size:12px;">{{ $message }}</span>
                     @enderror

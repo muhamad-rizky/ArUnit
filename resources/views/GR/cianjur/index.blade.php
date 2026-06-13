@@ -138,9 +138,9 @@
                 display: none;
                 position: absolute;
                 /* Ubah left menjadi negatif agar melebar ke kiri */
-                left: -150px; 
+                left: -150px;
                 /* Sesuaikan lebar agar lebih lebar dari container aslinya */
-                width: 400px; 
+                width: 400px;
                 z-index: 1050;
                 background: #ffffff;
                 border: 1px solid #d1d5db;
@@ -230,7 +230,7 @@
 
                                 $tipeKonsumen = strtolower($row->tipe_konsumen ?? '');
                                 $namaPerusahaan = strtoupper(optional($row->perusahaan)->nama ?? '');
-                                $branch = $row->branch ?? '';                                                   
+                                $branch = $row->branch ?? '';
 
                                 // 1. Set default style (jika tidak ada tanggal bukti)
                                 $rowStyle = 'background-color: ' . ($loop->even ? '#fef2f2' : '#ffffff') . ';';
@@ -464,12 +464,12 @@
                                 font-weight:600;
                             ">
                         </small>
-                        
+
                         <div id="perusahaan_dropdown" class="perusahaan-dropdown-container">
                             <div class="perusahaan-header-flex" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px;">
                                 <div style="font-weight: 600; color: #111827; white-space: nowrap;">Pilih Perusahaan</div>
-                                <input type="text" id="perusahaan_search" class="form-input" 
-                                    placeholder="Ketik nama..." 
+                                <input type="text" id="perusahaan_search" class="form-input"
+                                    placeholder="Ketik nama..."
                                     style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px;">
                             </div>
 
@@ -745,7 +745,7 @@
             let rows = document.querySelectorAll('#perusahaan_list tr');
             rows.forEach(row => {
                 // Hanya cari di kolom pertama (Nama Perusahaan)
-                let text = row.cells[0].innerText.toLowerCase(); 
+                let text = row.cells[0].innerText.toLowerCase();
                 row.style.display = text.includes(filter) ? '' : 'none';
             });
         });

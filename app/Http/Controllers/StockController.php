@@ -9,6 +9,11 @@ class StockController extends Controller
 {
     public function index(Request $request)
     {
+        // Auto-update status 'matching' to 'free' if it's been more than 3 days
+        Stock::where('status', 'matching')
+             ->where('updated_at', '<', now()->subDays(3))
+             ->update(['status' => 'free']);
+
         $search = $request->input('search');
         $query = Stock::query();
 
@@ -52,7 +57,7 @@ class StockController extends Controller
             'status' => 'nullable|string|max:255',
             'lain_lain' => 'nullable|string|max:255',
             'penjualan' => 'nullable|string|max:255',
-            'tanggal_matching_do' => 'nullable|string|max:255',
+            'tanggal_matching_do' => 'nullable|date',
             'cabang' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:255',
@@ -94,7 +99,7 @@ class StockController extends Controller
             'status' => 'nullable|string|max:255',
             'lain_lain' => 'nullable|string|max:255',
             'penjualan' => 'nullable|string|max:255',
-            'tanggal_matching_do' => 'nullable|string|max:255',
+            'tanggal_matching_do' => 'nullable|date',
             'cabang' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:255',
