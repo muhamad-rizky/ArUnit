@@ -249,6 +249,7 @@
                         <a href="{{ url('/admin/users') }}" class="nav-sublink {{ request()->is('admin/users*') ? 'active' : '' }}">Users</a>
                         <a href="{{ url('/admin/asuransi') }}" class="nav-sublink {{ request()->is('admin/asuransi*') ? 'active' : '' }}">Asuransi</a>
                         <a href="{{ url('/admin/perusahaan') }}" class="nav-sublink {{ request()->is('admin/perusahaan*') ? 'active' : '' }}">Perusahaan</a>
+                        <a href="{{ url('/admin/stocks') }}" class="nav-sublink {{ request()->is('admin/stocks*') ? 'active' : '' }}">Stock</a>
                     </div>
                 </div>
                 @endif

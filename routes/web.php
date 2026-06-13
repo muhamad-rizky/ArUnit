@@ -64,6 +64,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/perusahaan/{perusahaan}/edit', [App\Http\Controllers\PerusahaanController::class, 'edit'])->name('perusahaan.edit');
         Route::put('/perusahaan/{perusahaan}', [App\Http\Controllers\PerusahaanController::class, 'update'])->name('perusahaan.update');
         Route::delete('/perusahaan/{perusahaan}', [App\Http\Controllers\PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+        // Stock CRUD routes
+        Route::get('/stocks', [App\Http\Controllers\StockController::class, 'index'])->name('stocks.index');
+        Route::get('/stocks/create', [App\Http\Controllers\StockController::class, 'create'])->name('stocks.create');
+        Route::post('/stocks', [App\Http\Controllers\StockController::class, 'store'])->name('stocks.store');
+        Route::get('/stocks/{stock}/edit', [App\Http\Controllers\StockController::class, 'edit'])->name('stocks.edit');
+        Route::put('/stocks/{stock}', [App\Http\Controllers\StockController::class, 'update'])->name('stocks.update');
+        Route::delete('/stocks/{stock}', [App\Http\Controllers\StockController::class, 'destroy'])->name('stocks.destroy');
     });
 });
 
