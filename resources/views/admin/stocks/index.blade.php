@@ -34,10 +34,10 @@
         background-color: #e2e8f0;
     }
     .data-table tbody tr.row-matching {
-        background-color: #fef3c7 !important;
+        background-color: #fee2e2 !important;
     }
     .data-table tbody tr.row-matching:hover {
-        background-color: #fde68a !important;
+        background-color: #fecaca !important;
     }
     .data-table tbody tr.row-sold {
         background-color: #dcfce7 !important;

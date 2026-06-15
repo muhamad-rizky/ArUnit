@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Piutang;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -53,6 +54,19 @@ class DashboardController extends Controller
             return $summary['count'];
         })->toArray();
 
+        // STOCK DATA
+        $totalStock = Stock::count();
+        $stockByStatus = Stock::selectRaw('LOWER(status) as status_lower, COUNT(*) as total')
+            ->groupBy('status_lower')
+            ->pluck('total', 'status_lower')
+            ->toArray();
+        $stockByMobil = Stock::selectRaw('nama_mobil, COUNT(*) as total')
+            ->whereNotNull('nama_mobil')
+            ->where('nama_mobil', '!=', '')
+            ->groupBy('nama_mobil')
+            ->orderByDesc('total')
+            ->get();
+
         return view('dashboard', [
             'records' => $records,
             'totalPiutang' => $totalPiutang,
@@ -68,6 +82,9 @@ class DashboardController extends Controller
             'selectedBranch' => $selectedBranch,
             'recentRecords' => $selectedBranch ? $filteredRecords : $records->take(10),
             'selectedRecords' => $filteredRecords,
+            'totalStock' => $totalStock,
+            'stockByStatus' => $stockByStatus,
+            'stockByMobil' => $stockByMobil,
         ]);
     }
 }
