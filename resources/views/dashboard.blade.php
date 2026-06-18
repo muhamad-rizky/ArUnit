@@ -210,6 +210,72 @@
                 </table>
             </div>
         </div>
+
+        {{-- Visual Divider --}}
+        <hr style="margin: 40px 0 10px 0; border: none; border-top: 2px dashed #cbd5e1;">
+
+        {{-- Stock Summaries --}}
+        <h2 style="font-size:18px;font-weight:600;margin:16px 0 16px;">Data Kendaraan Stock</h2>
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(59,130,246,.15); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-car" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value" style="color:#3b82f6;">{{ $totalStock ?? 0 }}</div>
+                <div class="stat-label">Total Stock</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(16,185,129,.15); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-check-circle" style="color: #10b981; font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value" style="color:#10b981;">{{ $stockByStatus['free'] ?? 0 }}</div>
+                <div class="stat-label">Stock Free</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(239,68,68,.15); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-clock" style="color: #ef4444; font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value" style="color:#ef4444;">{{ $stockByStatus['matching'] ?? 0 }}</div>
+                <div class="stat-label">Stock Matching</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon" style="background:rgba(139,92,246,.15); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-handshake" style="color: #8b5cf6; font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value" style="color:#8b5cf6;">{{ $stockByStatus['sold'] ?? 0 }}</div>
+                <div class="stat-label">Stock Sold</div>
+            </div>
+        </div>
+
+        <div class="table-container" style="padding:24px; margin-top:16px;">
+            <h2 style="font-size:16px;font-weight:600;margin-bottom:8px;">Jenis Mobil (Stock)</h2>
+            <p style="margin-bottom:16px;color:#6b7280;font-size:13px;">Ringkasan jumlah stock berdasarkan nama/jenis mobil.</p>
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;min-width:420px;">
+                    <thead>
+                        <tr style="background:#f9fafb;">
+                            <th style="text-align:left;padding:12px 10px;font-size:12px;color:#4b5563;border-bottom:1px solid #e5e7eb;">Nama/Jenis Mobil</th>
+                            <th style="text-align:right;padding:12px 10px;font-size:12px;color:#4b5563;border-bottom:1px solid #e5e7eb;">Total Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($stockByMobil ?? [] as $mobil)
+                            <tr style="border-bottom:1px solid #e5e7eb;">
+                                <td style="padding:14px 10px;font-size:13px;color:#111827;font-weight:500;">{{ $mobil->nama_mobil }}</td>
+                                <td style="padding:14px 10px;font-size:13px;color:#111827;text-align:right;">{{ $mobil->total }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" style="padding:16px 10px;text-align:center;color:#6b7280;">Tidak ada data mobil.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     @endif
 
     @if(!empty($selectedBranch))

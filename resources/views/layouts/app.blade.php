@@ -238,20 +238,27 @@
                 @endif
 
                 @if(auth()->check() && auth()->user()->is_admin)
-                <div class="nav-group {{ request()->is('admin/*') ? 'open' : '' }}" id="adminMenu">
+                <div class="nav-group {{ request()->is('admin/*') && !request()->is('admin/stocks*') ? 'open' : '' }}" id="adminMenu">
                     <button class="nav-link nav-toggle" onclick="toggleSubmenu('adminMenu')" style="width: 100.2%; text-align: left; background: none; border: none; cursor: pointer;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
                             <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"></path>
                         </svg>
-                        <span>Admin</span>
+                        <span>AR</span>
                     </button>
                     <div class="nav-submenu">
                         <a href="{{ url('/admin/users') }}" class="nav-sublink {{ request()->is('admin/users*') ? 'active' : '' }}">Users</a>
                         <a href="{{ url('/admin/asuransi') }}" class="nav-sublink {{ request()->is('admin/asuransi*') ? 'active' : '' }}">Asuransi</a>
                         <a href="{{ url('/admin/perusahaan') }}" class="nav-sublink {{ request()->is('admin/perusahaan*') ? 'active' : '' }}">Perusahaan</a>
-                        <a href="{{ url('/admin/stocks') }}" class="nav-sublink {{ request()->is('admin/stocks*') ? 'active' : '' }}">Stock</a>
                     </div>
                 </div>
+                <a href="{{ url('/admin/stocks') }}" class="nav-link {{ request()->is('admin/stocks*') ? 'active' : '' }}" id="nav-stocks">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <span>Stock</span>
+                </a>
                 @endif
 
                 @auth
