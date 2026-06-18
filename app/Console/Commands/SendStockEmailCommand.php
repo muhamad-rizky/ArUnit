@@ -30,28 +30,44 @@ class SendStockEmailCommand extends Command
      */
     public function handle()
     {
-        $branchEmails = [
-        'ciawi' => 'bm.cwi@suzukidutacendana.com',
-        'cianjur' => 'bm.cjr@suzukidutacendana.com',
-        'cinere' => 'bm.cnr@suzukidutacendana.com',
-        'jatiasih' => 'bm.jts@suzukidutacendana.com',
-        'bp' => 'bm.jts@suzukidutacendana.com',
-    ];
-    $targetDate = Carbon::now()->subDays(3)->toDateString();
+        
+        // Mapping cabang ke daftar email (mirip dengan logic AR)
+        $branchEmailLists = [
+            'ciawi' => [
+                'bm.cwi@suzukidutacendana.com',
+            ],
+            'cianjur' => [
+                'bm.cjr@suzukidutacendana.com',
+            ],
+            'cinere' => [
+                'bm.cnr@suzukidutacendana.com',
+            ],
+            'jatiasih' => [
+                'bm.jts@suzukidutacendana.com',
+            ],
+            'bp' => [
+                'bm.jts@suzukidutacendana.com',
+            ],
+        ];
+
+        $targetDate = Carbon::now()->subDays(3)->toDateString();
         $stocks = Stock::whereDate('created_at', $targetDate)->get();
-    if ($stocks->isEmpty()) {
-        $this->info("Tidak ada data stock yang diinput pada {$targetDate}.");
-        return;
-    }
-    $grouped = $stocks->groupBy('cabang');
-    foreach ($grouped as $cabang => $group) {
-        $email = $branchEmails[$cabang] ?? null;
-        if ($email) {
-            Mail::to($email)->send(new StockNotificationMail($group));
-            $this->info("Email berhasil dikirim ke {$email} untuk {$group->count()} stock cabang {$cabang} pada {$targetDate}.");
-        } else {
-            $this->warn("Tidak ada email terdaftar untuk cabang {$cabang}. Skipping.");
+        if ($stocks->isEmpty()) {
+            $this->info("Tidak ada data stock yang diinput pada {$targetDate}.");
+            return;
         }
-    }
+
+        // Kelompokkan stock per cabang
+        $grouped = $stocks->groupBy('cabang');
+        foreach ($grouped as $cabang => $group) {
+            $emails = $branchEmailLists[$cabang] ?? [];
+            if (!empty($emails)) {
+                // Kirim ke semua email dalam array
+                Mail::to($emails)->send(new StockNotificationMail($group));
+                $this->info("Email stock berhasil dikirim ke cabang {$cabang} ({$cabang}) untuk {$group->count()} record pada {$targetDate}.");
+            } else {
+                $this->warn("Tidak ada email terdaftar untuk cabang {$cabang}. Skipping.");
+            }
+        }
     }
 }
