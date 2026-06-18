@@ -6,7 +6,7 @@
     <div class="page-header">
         <div>
             <h1 class="page-title">Dashboard</h1>
-            <p class="page-subtitle">Ringkasan data piutang konsumen AR Service.</p>
+            <p class="page-subtitle">Operation Transformation Excellent DCA</p>
         </div>
         <div class="server-time">
             <span class="dot"></span>

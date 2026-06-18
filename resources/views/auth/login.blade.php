@@ -135,8 +135,8 @@
     <div class="login-card">
         <div class="login-header">
             <img src="{{ asset('assets/suzuki-icon.jpeg') }}" alt="Suzuki Logo">
-            <h1 class="login-title">AR SERVICE</h1>
-            <p class="login-subtitle">Login untuk mengakses cabang Anda</p>
+            <h1 class="login-title">OTE DCA</h1>
+            <p class="login-subtitle">Operation Tranformation Excellent DCA</p>
         </div>
 
         <form method="POST" action="{{ url('/login') }}">

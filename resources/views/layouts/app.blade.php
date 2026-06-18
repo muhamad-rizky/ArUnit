@@ -186,8 +186,8 @@
                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
                 </div>
                 <div style="min-width: 0;">
-                    <span class="brand-name" style="display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">AR SERVICE</span>
-                    <span class="brand-subtitle" style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Piutang Konsumen</span>
+                    <span class="brand-name" style="display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">OTE DCA</span>
+                    <span class="brand-subtitle" style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></span>
                 </div>
             </div>
 
