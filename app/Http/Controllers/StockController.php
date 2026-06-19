@@ -17,10 +17,13 @@ class StockController extends Controller
         $search = $request->input('search');
         $query = Stock::query();
 
+        // Perbaikan: Menggunakan Logical Grouping (Closure) untuk orWhere agar aman
         if ($search) {
-            $query->where('nama_mobil', 'LIKE', "%{$search}%")
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_mobil', 'LIKE', "%{$search}%")
                   ->orWhere('no_do', 'LIKE', "%{$search}%")
                   ->orWhere('norangka', 'LIKE', "%{$search}%");
+            });
         }
 
         $items = $query->latest()->paginate(15);

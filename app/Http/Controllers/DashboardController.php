@@ -13,10 +13,12 @@ class DashboardController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        // 1. Ambil data Piutang berdasarkan Role
         if (! empty($user) && ($user->is_admin ?? false)) {
             $records = Piutang::orderByDesc('id')->get();
         } else {
-            $records = Piutang::where('branch', $user->branch)->orderByDesc('id')->get();
+            // Ditambahkan fallback ?? '' agar tidak error jika branch kosong/null
+            $records = Piutang::where('branch', $user->branch ?? '')->orderByDesc('id')->get();
         }
 
         $branchFilter = strtolower(request()->query('branch', ''));
@@ -28,9 +30,11 @@ class DashboardController extends Controller
         $totalKonsumen = $records->map(function ($r) {
             return $r->no_spk ?: $r->nama_konsumen;
         })->filter()->unique()->count();
+        
         $totalAsuransi = $records->where('spk_type', 'ASURANSI')->count();
         $totalDebet = $records->sum('debet');
         $totalKredit = $records->sum('kredit');
+        
         $bpInsuranceTotals = Piutang::where('branch', 'bp')
             ->where('spk_type', 'ASURANSI')
             ->whereNotNull('nama_asuransi')
@@ -39,10 +43,12 @@ class DashboardController extends Controller
             ->groupBy('nama_asuransi')
             ->orderByDesc('total')
             ->get();
+            
         $grBranchCount = $records->where('branch', '!=', 'bp')->pluck('branch')->unique()->count();
         $totalSelisih = $records->sum(function ($item) {
             return ($item->saldo_awal + $item->debet - $item->kredit) - $item->saldo_akhir;
         });
+        
         $branchSummaries = $records->groupBy('branch')->map(function ($group, $branch) {
             return [
                 'count' => $group->count(),
@@ -54,18 +60,24 @@ class DashboardController extends Controller
             return $summary['count'];
         })->toArray();
 
-        // STOCK DATA
-        $totalStock = Stock::count();
-        $stockByStatus = Stock::selectRaw('LOWER(status) as status_lower, COUNT(*) as total')
-            ->groupBy('status_lower')
-            ->pluck('total', 'status_lower')
-            ->toArray();
-        $stockByMobil = Stock::selectRaw('nama_mobil, COUNT(*) as total')
-            ->whereNotNull('nama_mobil')
-            ->where('nama_mobil', '!=', '')
-            ->groupBy('nama_mobil')
-            ->orderByDesc('total')
-            ->get();
+        // 2. Ambil data STOCK (Hanya dijalankan jika user punya akses Admin / Admin Stock)
+        $totalStock = 0;
+        $stockByStatus = [];
+        $stockByMobil = collect();
+
+        if (! empty($user) && (($user->is_admin ?? false) || ($user->is_admin_stock ?? false))) {
+            $totalStock = Stock::count();
+            $stockByStatus = Stock::selectRaw('LOWER(status) as status_lower, COUNT(*) as total')
+                ->groupBy('status_lower')
+                ->pluck('total', 'status_lower')
+                ->toArray();
+            $stockByMobil = Stock::selectRaw('nama_mobil, COUNT(*) as total')
+                ->whereNotNull('nama_mobil')
+                ->where('nama_mobil', '!=', '')
+                ->groupBy('nama_mobil')
+                ->orderByDesc('total')
+                ->get();
+        }
 
         return view('dashboard', [
             'records' => $records,

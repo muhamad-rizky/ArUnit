@@ -210,7 +210,9 @@
                 </table>
             </div>
         </div>
+        @endif
 
+        @if(auth()->check() && auth()->user()->is_admin_stock)
         {{-- Visual Divider --}}
         <hr style="margin: 40px 0 10px 0; border: none; border-top: 2px dashed #cbd5e1;">
 
@@ -340,8 +342,4 @@
             </div>
         </div> -->
     @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
 @endsection

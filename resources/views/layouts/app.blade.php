@@ -251,6 +251,9 @@
                         <a href="{{ url('/admin/perusahaan') }}" class="nav-sublink {{ request()->is('admin/perusahaan*') ? 'active' : '' }}">Perusahaan</a>
                     </div>
                 </div>
+                @endif
+
+                @if(auth()->check() && auth()->user()->is_admin_stock)
                 <a href="{{ url('/admin/stocks') }}" class="nav-link {{ request()->is('admin/stocks*') ? 'active' : '' }}" id="nav-stocks">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -282,8 +285,8 @@
         <main class="main-content">
             @if (! request()->is('dashboard'))
                 <div style="margin-bottom: 18px;">
-                    <a href="{{ url('/dashboard') }}" class="btn-primary" style="background-color: transparent; color: var(--accent-red); border: 1px solid var(--accent-red); padding: 8px 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px; height:16px; color: var(--accent-red);">
+                    <a href="{{ url('/dashboard') }}" class="btn-primary" style="background-color: transparent; color: white; border: 1px solid var(--accent-red); padding: 8px 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px; height:16px; color: white;">
                             <path d="M19 12H5"></path>
                             <path d="M12 19l-7-7 7-7"></path>
                         </svg>
