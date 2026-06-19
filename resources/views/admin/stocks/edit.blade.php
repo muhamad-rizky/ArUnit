@@ -38,7 +38,7 @@
                     'lain_lain' => ['label' => 'LAIN-LAIN', 'type' => 'text'],
                     'penjualan' => ['label' => 'PENJUALAN', 'type' => 'text'],
                     'tanggal_matching_do' => ['label' => 'TANGGAL MATCHING/DO', 'type' => 'date'],
-                    'cabang' => ['label' => 'CABANG', 'type' => 'text'],
+                    'cabang' => ['label' => 'CABANG', 'type' => 'select', 'options' => ['ciawi' => 'Ciawi', 'cianjur' => 'Cianjur', 'cinere' => 'Cinere', 'jatiasih' => 'Jatiasih', 'bp' => 'BP']],
                     'keterangan' => ['label' => 'KETERANGAN', 'type' => 'text'],
                     'unit' => ['label' => 'UNIT', 'type' => 'text'],
                 ];
