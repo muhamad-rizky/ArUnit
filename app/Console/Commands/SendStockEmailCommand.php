@@ -22,8 +22,7 @@ class SendStockEmailCommand extends Command
             'bm.cjr@suzukidutacendana.com',
             'bm.cnr@suzukidutacendana.com',
             'bm.jts@suzukidutacendana.com',
-            'it@dutacendana.com',
-            'ahmadmad122131@gmail.com'
+            'it@dutacendana.com'
         ];
 
         $targetDate = Carbon::now('Asia/Jakarta')->subDays(3)->toDateString();
