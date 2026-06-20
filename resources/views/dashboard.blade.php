@@ -14,6 +14,7 @@
         </div>
     </div>
 
+    @if(auth()->check() && auth()->user()->is_admin)
     {{-- Summary Cards --}}
     <div class="dashboard-grid">
         {{-- Total Piutang --}}
@@ -54,6 +55,7 @@
         </div>
 
     </div>
+    @endif
 
     @if (!empty($summaryBranches))
         <div class="table-container" style="padding:24px; margin-top: 16px;">
