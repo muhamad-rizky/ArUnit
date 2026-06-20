@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Mail\Mailables\Address;
 
 class StockNotificationMail extends Mailable
 {
@@ -27,12 +28,13 @@ class StockNotificationMail extends Mailable
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Notifikasi Stock 3 Hari Lalu',
-        );
-    }
+  public function envelope(): Envelope
+{
+    return new Envelope(
+        from: new Address(env('MAIL_STOCK_FROM_ADDRESS'), env('MAIL_STOCK_FROM_NAME')),
+        subject: 'Notifikasi Stock 3 Hari Lalu',
+    );
+}
 
     /**
      * Get the message content definition.
@@ -52,7 +54,7 @@ class StockNotificationMail extends Mailable
         $pdf = Pdf::loadView(
             'pdf.stock_download',
             ['stocks' => $this->stocks]
-        )->setPaper('a4', 'landscape'); 
+        )->setPaper('a4', 'landscape');
 
         return [
             Attachment::fromData(
@@ -61,4 +63,5 @@ class StockNotificationMail extends Mailable
             )->withMime('application/pdf'),
         ];
     }
+
 }

@@ -37,6 +37,7 @@ return [
 
     'mailers' => [
 
+        // 1. MAILER UTAMA (Untuk AR)
         'smtp' => [
             'transport' => 'smtp',
             'scheme' => env('MAIL_SCHEME'),
@@ -47,6 +48,17 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
+
+        // 2. MAILER KEDUA (Khusus Untuk STOCK)
+        'smtp_stock' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+            'port' => env('MAIL_PORT', 465),
+            'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+            'username' => env('MAIL_STOCK_USERNAME'),
+            'password' => env('MAIL_STOCK_PASSWORD'),
+            'timeout' => null,
         ],
 
         'ses' => [

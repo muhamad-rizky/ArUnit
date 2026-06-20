@@ -22,22 +22,26 @@ class SendStockEmailCommand extends Command
             'bm.cjr@suzukidutacendana.com',
             'bm.cnr@suzukidutacendana.com',
             'bm.jts@suzukidutacendana.com',
-            'it@dutacendana.com'
+            'it@dutacendana.com',
+            'ahmadmad122131@gmail.com',
+            'm.rizky@smkwikrama.sch.id'
         ];
 
         $targetDate = Carbon::now('Asia/Jakarta')->subDays(3)->toDateString();
-        
+
         $stocks = Stock::whereDate('tanggal_do', $targetDate)->get();
 
         // $stocks = Stock::whereDate('created_at', $targetDate)->get();
-        
+
         if ($stocks->isEmpty()) {
             $this->info("Tidak ada data stock dengan Tanggal DO {$targetDate}.");
             return;
         }
 
-        Mail::to($semuaPenerima)->send(new StockNotificationMail($stocks));
-        
+        Mail::mailer('smtp_stock')
+            ->to($semuaPenerima)
+            ->send(new StockNotificationMail($stocks));
+
         $this->info("Email stock sukses dikirim ke seluruh BM, IT & Admin (Total: {$stocks->count()} unit pada {$targetDate}).");
         $this->info('Selesai memproses email stock.');
     }
