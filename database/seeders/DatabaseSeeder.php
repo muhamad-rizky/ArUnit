@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,7 +32,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         // Hapus user lain yang tidak ada dalam daftar
-        \DB::table('users')->whereNotIn('email', $keep)->delete();
+        DB::table('users')->whereNotIn('email', $keep)->delete();
 
         // Data user cabang
         $users = [

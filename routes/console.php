@@ -15,5 +15,5 @@ Schedule::command('app:send-weekly-branch-data-email')
     ->timezone('Asia/Jakarta');
 
 Schedule::command('app:send-stock-email')
-    ->dailyAt('08:00')
+    ->dailyAt('09:00')
     ->timezone('Asia/Jakarta');
