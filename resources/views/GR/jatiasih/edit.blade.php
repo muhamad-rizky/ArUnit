@@ -305,11 +305,11 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Konsumen <span style="color:red">*</span></label>
-                        <input type="text" name="nama_konsumen" class="form-input" value="{{ old('nama_konsumen', $record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) }}">
+                        <input type="text" name="nama_konsumen" class="form-input input-blocked" value="{{ old('nama_konsumen', $record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) }}" readonly>
                     </div>
                     <div class="form-group">
                         <label class="form-label">No. Polisi (Plat) <span style="color:red">*</span></label>
-                        <input type="text" name="no_polisi" class="form-input" value="{{ old('no_polisi', $record->no_polisi ?? ($record['no_polisi'] ?? '')) }}">
+                        <input type="text" name="no_polisi" class="form-input input-blocked" value="{{ old('no_polisi', $record->no_polisi ?? ($record['no_polisi'] ?? '')) }}" readonly>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Kategori SPK <span style="color:red">*</span></label>
@@ -343,7 +343,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Debet</label>
-                        <input type="text" name="debet" class="form-input rupiah-field input-blocked" 
+                        <input type="text" name="debet" class="form-input rupiah-field input-blocked" readonly
                             value="{{ old('debet', isset($record) ? number_format((is_object($record) ? $record->debet : ($record['debet'] ?? 0)) ?? 0, 0, '', '') : '') }}">
                     </div>
                     <input type="hidden" name="kredit" id="hidden_kredit" value="">

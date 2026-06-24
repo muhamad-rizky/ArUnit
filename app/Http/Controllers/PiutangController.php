@@ -16,7 +16,7 @@ class PiutangController extends Controller
         $user = Auth::user();
         abort_if((! ($user->is_admin ?? false)) && $user->branch !== 'bp', 403, 'Unauthorized action.');
 
-        $records = Piutang::where('branch', 'bp')->orderByDesc('id')->get();
+        $records = Piutang::where('branch', 'bp')->orderByDesc('tgl_bukti')->orderByDesc('id')->get();
 
         $totalSaldoAwal = $records->sum('saldo_awal');
         $totalDebet = $records->sum('debet');
@@ -110,6 +110,7 @@ class PiutangController extends Controller
 
         $records = Piutang::with('perusahaan')
             ->where('branch', $branch)
+            ->orderByDesc('tgl_bukti')
             ->orderByDesc('id')
             ->get();
 

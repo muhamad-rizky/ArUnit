@@ -219,17 +219,17 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Konsumen <span style="color:red">*</span></label>
-                        <input type="text" name="nama_konsumen" class="form-input" value="{{ old('nama_konsumen', $record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) }}" style="background-color: #e9ecef;">
+                        <input type="text" name="nama_konsumen" class="form-input input-blocked" value="{{ old('nama_konsumen', $record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) }}" readonly>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">No. Polisi (Plat) <span style="color:red">*</span></label>
-                        <input type="text" name="no_polisi" class="form-input" value="{{ old('no_polisi', $record->no_polisi ?? ($record['no_polisi'] ?? '')) }}">
+                        <input type="text" name="no_polisi" class="form-input input-blocked" value="{{ old('no_polisi', $record->no_polisi ?? ($record['no_polisi'] ?? '')) }}" readonly>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">No. Polis (Asuransi) <span style="color:red">*</span></label>
-                        <input type="text" name="no_polis" class="form-input" value="{{ old('no_polis', $record->no_polis ?? ($record['no_polis'] ?? '')) }}">
+                        <input type="text" name="no_polis" class="form-input input-blocked" value="{{ old('no_polis', $record->no_polis ?? ($record['no_polis'] ?? '')) }}" readonly>
                     </div>
 
                     <div class="form-group">
@@ -253,9 +253,8 @@
                         <input
                             type="text"
                             id="asuransi_display_edit"
-                            class="form-input"
+                            class="form-input input-blocked"
                             readonly
-                            style="cursor:pointer;background:#f9fafb !important;"
                             value="{{ old('nama_asuransi', $record->nama_asuransi ?? ($record['nama_asuransi'] ?? '')) }}"
                             placeholder="Klik untuk memilih asuransi">
 
@@ -319,10 +318,8 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Debet</label>
-                        <input type="text" name="debet" class="form-input rupiah-field" 
-                            value="{{ old('debet', isset($record->debet) ? number_format($record->debet, 0, '', '') : (isset($record['debet']) ? number_format($record['debet'], 0, '', '') : '')) }}"
-                            {{ (isset($record->status) && $record->status == 'LUNAS') ? 'readonly' : '' }}
-                            {!! (isset($record->status) && $record->status == 'LUNAS') ? 'style="background-color: #e9ecef; cursor: not-allowed;"' : '' !!}>
+                        <input type="text" name="debet" class="form-input rupiah-field input-blocked" readonly 
+                            value="{{ old('debet', isset($record->debet) ? number_format($record->debet, 0, '', '') : (isset($record['debet']) ? number_format($record['debet'], 0, '', '') : '')) }}">
                     </div>
                     <input type="hidden" name="kredit" id="hidden_kredit" value="">
                 </div>
