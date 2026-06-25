@@ -51,11 +51,10 @@
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
                     
-                    @if(in_array($name, ['nama_mobil', 'kode_mobil', 'warna']))
+                    @if(in_array($name, ['nama_mobil', 'warna']))
                         @php
                             $options = [];
                             if ($name === 'nama_mobil') $options = $namaMobilOptions ?? [];
-                            if ($name === 'kode_mobil') $options = $kodeMobilOptions ?? [];
                             if ($name === 'warna') $options = $warnaOptions ?? [];
                         @endphp
                         <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">

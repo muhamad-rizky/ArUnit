@@ -61,11 +61,10 @@
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
                     
-                    @if(in_array($name, ['nama_mobil', 'kode_mobil', 'warna']))
+                    @if(in_array($name, ['nama_mobil', 'warna']))
                         @php
                             $options = [];
                             if ($name === 'nama_mobil') $options = $namaMobilOptions ?? [];
-                            if ($name === 'kode_mobil') $options = $kodeMobilOptions ?? [];
                             if ($name === 'warna') $options = $warnaOptions ?? [];
                         @endphp
                         @if(!$isEditable)

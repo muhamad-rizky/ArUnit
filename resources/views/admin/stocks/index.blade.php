@@ -215,9 +215,20 @@
             <h1 class="page-title">Data Stock</h1>
             <p class="page-subtitle" style="margin-top: 4px;">Kelola daftar stock kendaraan dengan mudah.</p>
         </div>
-        <a href="{{ route('admin.stocks.create') }}" class="btn-primary-top">
-            Tambah Stock
-        </a>
+        <div style="display:flex; gap:12px;">
+            <a href="{{ route('admin.stocks.print') }}" target="_blank" class="btn-primary-top" style="background-color: #64748b;">
+                <i class="fa-solid fa-print"></i> Print
+            </a>
+            <a href="{{ route('admin.stocks.exportPdf') }}" class="btn-primary-top" style="background-color: #ef4444;">
+                <i class="fa-solid fa-file-pdf"></i> PDF
+            </a>
+            <a href="{{ route('admin.stocks.exportExcel') }}" class="btn-primary-top" style="background-color: #10b981;">
+                <i class="fa-solid fa-file-excel"></i> Excel
+            </a>
+            <a href="{{ route('admin.stocks.create') }}" class="btn-primary-top" style="background-color: #3b82f6;">
+                <i class="fa-solid fa-plus"></i> Tambah Stock
+            </a>
+        </div>
     </div>
 
     @if (session('success'))

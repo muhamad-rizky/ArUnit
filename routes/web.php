@@ -7,6 +7,8 @@ use App\Http\Controllers\AsuransiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\WarnaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -49,7 +51,17 @@ Route::middleware('auth')->group(function () {
         Route::resource('asuransi', AsuransiController::class);
         Route::resource('users', UserController::class);
         Route::resource('perusahaan', PerusahaanController::class);
+        
+        Route::get('stocks/export-pdf', [StockController::class, 'exportPdf'])->name('stocks.exportPdf');
+        Route::get('stocks/export-excel', [StockController::class, 'exportExcel'])->name('stocks.exportExcel');
+        Route::get('stocks/print', [StockController::class, 'print'])->name('stocks.print');
         Route::resource('stocks', StockController::class);
+        
+        Route::resource('units', UnitController::class);
+        Route::resource('warnas', WarnaController::class);
+        Route::get('in-units', function () {
+            return view('admin.stocks.in_unit');
+        })->name('in_units');
     });
 
     Route::prefix('dev-tools')->group(function () {

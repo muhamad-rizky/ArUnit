@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use App\Models\Unit;
+use App\Models\Warna;
 use Illuminate\Http\Request;
+use App\Exports\StockExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StockController extends Controller
 {
@@ -32,11 +37,10 @@ class StockController extends Controller
 
     public function create()
     {
-        $namaMobilOptions = Stock::whereNotNull('nama_mobil')->where('nama_mobil', '!=', '')->distinct()->orderBy('nama_mobil')->pluck('nama_mobil');
-        $kodeMobilOptions = Stock::whereNotNull('kode_mobil')->where('kode_mobil', '!=', '')->distinct()->orderBy('kode_mobil')->pluck('kode_mobil');
-        $warnaOptions = Stock::whereNotNull('warna')->where('warna', '!=', '')->distinct()->orderBy('warna')->pluck('warna');
+        $namaMobilOptions = Unit::orderBy('nama')->pluck('nama');
+        $warnaOptions = Warna::orderBy('nama')->pluck('nama');
 
-        return view('admin.stocks.create', compact('namaMobilOptions', 'kodeMobilOptions', 'warnaOptions'));
+        return view('admin.stocks.create', compact('namaMobilOptions', 'warnaOptions'));
     }
 
     public function store(Request $request)
@@ -80,11 +84,10 @@ class StockController extends Controller
 
     public function edit(Stock $stock)
     {
-        $namaMobilOptions = Stock::whereNotNull('nama_mobil')->where('nama_mobil', '!=', '')->distinct()->orderBy('nama_mobil')->pluck('nama_mobil');
-        $kodeMobilOptions = Stock::whereNotNull('kode_mobil')->where('kode_mobil', '!=', '')->distinct()->orderBy('kode_mobil')->pluck('kode_mobil');
-        $warnaOptions = Stock::whereNotNull('warna')->where('warna', '!=', '')->distinct()->orderBy('warna')->pluck('warna');
+        $namaMobilOptions = Unit::orderBy('nama')->pluck('nama');
+        $warnaOptions = Warna::orderBy('nama')->pluck('nama');
 
-        return view('admin.stocks.edit', compact('stock', 'namaMobilOptions', 'kodeMobilOptions', 'warnaOptions'));
+        return view('admin.stocks.edit', compact('stock', 'namaMobilOptions', 'warnaOptions'));
     }
 
     public function update(Request $request, Stock $stock)
@@ -132,5 +135,23 @@ class StockController extends Controller
 
         return redirect()->route('admin.stocks.index')
             ->with('success', 'Data stock berhasil dihapus.');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new StockExport, 'stock.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $items = Stock::all();
+        $pdf = Pdf::loadView('admin.stocks.pdf', compact('items'))->setPaper('a4', 'landscape');
+        return $pdf->download('stock.pdf');
+    }
+
+    public function print()
+    {
+        $items = Stock::all();
+        return view('admin.stocks.print', compact('items'));
     }
 }
