@@ -31,7 +31,7 @@
                     'acs2' => ['label' => 'ACS2', 'type' => 'number'],
                     'subsidi' => ['label' => 'SUBSIDI', 'type' => 'number'],
                     'hpp' => ['label' => 'HPP', 'type' => 'number'],
-                    'lokasi' => ['label' => 'LOKASI', 'type' => 'text'],
+                    'lokasi' => ['label' => 'LOKASI', 'type' => 'select', 'options' => ['ciawi' => 'Ciawi', 'cianjur' => 'Cianjur', 'cinere' => 'Cinere', 'jatiasih' => 'Jatiasih', 'cikarang' => 'Cikarang', 'tambun' => 'Tambun']],
                     'estimasi_unit_masuk_gudang_dca' => ['label' => 'ESTIMASI MASUK GUDANG', 'type' => 'text'],
                     'status' => ['label' => 'STATUS', 'type' => 'select', 'options' => ['free' => 'Free', 'matching' => 'Matching', 'sold' => 'Sold']],
                     'lain_lain' => ['label' => 'LAIN-LAIN', 'type' => 'text'],
@@ -44,10 +44,28 @@
             @endphp
 
             @foreach($fields as $name => $field)
+                @php
+                    $readonlyAttr = ($name === 'hpp') ? 'readonly' : '';
+                    $bgColor = ($name === 'hpp') ? '#f1f5f9' : '#fff';
+                @endphp
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
-                    @if(isset($field['type']) && $field['type'] === 'select')
-                        <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box;">
+                    
+                    @if(in_array($name, ['nama_mobil', 'kode_mobil', 'warna']))
+                        @php
+                            $options = [];
+                            if ($name === 'nama_mobil') $options = $namaMobilOptions ?? [];
+                            if ($name === 'kode_mobil') $options = $kodeMobilOptions ?? [];
+                            if ($name === 'warna') $options = $warnaOptions ?? [];
+                        @endphp
+                        <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
+                            <option value="">-- Pilih {{ $field['label'] }} --</option>
+                            @foreach($options as $val)
+                                <option value="{{ $val }}" {{ old($name) == $val ? 'selected' : '' }}>{{ $val }}</option>
+                            @endforeach
+                        </select>
+                    @elseif(isset($field['type']) && $field['type'] === 'select')
+                        <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
                             <option value="">-- Pilih {{ $field['label'] }} --</option>
                             @foreach($field['options'] as $val => $text)
                                 <option value="{{ $val }}" {{ old($name) == $val ? 'selected' : '' }}>{{ $text }}</option>
@@ -55,8 +73,9 @@
                         </select>
                     @else
                         <input type="{{ $field['type'] }}" name="{{ $name }}" id="{{ $name }}" value="{{ old($name) }}"
-                               style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box;">
+                               {{ $readonlyAttr }} style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
                     @endif
+                    
                     @error($name)
                         <span style="color:#ef4444; font-size:12px;">{{ $message }}</span>
                     @enderror

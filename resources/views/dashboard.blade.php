@@ -155,13 +155,15 @@
                 <a href="{{ url('/gr/cianjur') }}"
                     style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:10px;text-decoration:none;color:var(--text-primary);transition:all .2s;">
                     <div
-                        style="width:36px;height:36px;background:rgba(245,158,11,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                            fill="none" stroke="#f59e0b" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                            <circle cx="12" cy="10" r="3" />
-                        </svg>
-                    </div>
+                    style="width:36px;height:36px;background:#14b8a6;border-radius:8px;display:flex;align-items:center;justify-content:center;"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="#14b8a6" stroke-width="2"
+                    >
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                </div>
                     <div>
                         <div style="font-weight:600;font-size:13px;">GR Cianjur</div>
                         <div style="font-size:11px;color:var(--text-muted);">Cabang Cianjur</div>

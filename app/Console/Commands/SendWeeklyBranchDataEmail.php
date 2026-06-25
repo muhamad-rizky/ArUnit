@@ -33,8 +33,7 @@ class SendWeeklyBranchDataEmail extends Command
                 });
 
                 $query->orWhere(function ($q) {
-                    $q->where('piutangs.tipe_konsumen', 'perusahaan')
-                    ->whereNotNull('piutangs.perusahaan_id');
+                    $q->where('piutangs.tipe_konsumen', 'perusahaan');
                 });
 
             })
@@ -43,18 +42,21 @@ class SendWeeklyBranchDataEmail extends Command
 
             $dataMingguan = $dataMingguan->filter(function ($item) {
 
-            if ($item->tipe_konsumen !== 'perusahaan') {
+            $isNew = Carbon::parse($item->created_at, 'Asia/Jakarta')->diffInDays(Carbon::now('Asia/Jakarta')) <= 7;
+            if ($isNew) {
                 return true;
             }
 
-            if (!$item->perusahaan) {
-                return false;
+            if (strtolower($item->tipe_konsumen) !== 'perusahaan') {
+                return true;
             }
 
-            $umurPiutang = Carbon::parse($item->tgl_bukti,'Asia/Jakarta')
+            $overdue = optional($item->perusahaan)->overdue ?? 28;
+
+            $umurPiutang = Carbon::parse($item->tgl_bukti, 'Asia/Jakarta')
                 ->diffInDays(Carbon::now('Asia/Jakarta'));
 
-            return $umurPiutang >= $item->perusahaan->overdue;
+            return $umurPiutang >= $overdue;
         });
 
         if ($dataMingguan->isEmpty()) {
@@ -64,13 +66,13 @@ class SendWeeklyBranchDataEmail extends Command
 
         $branchDataGrouped = $dataMingguan->groupBy(function($item) {
             $namaBranch = strtoupper(trim($item->branch));
-            
+
             if (str_contains($namaBranch, 'CIAWI')) return 'Ciawi';
             if (str_contains($namaBranch, 'CINERE')) return 'Cinere';
             if (str_contains($namaBranch, 'CIANJUR')) return 'Cianjur';
             if (str_contains($namaBranch, 'JATIASIH')) return 'Jatiasih';
             if (str_contains($namaBranch, 'BP')) return 'BP';
-            
+
             return 'Tidak Diketahui';
         });
 
@@ -117,14 +119,14 @@ class SendWeeklyBranchDataEmail extends Command
             'fineke99@gmail.com',
             'om@suzukidutacendana.com'
         ];
-
+        
         foreach ($daftarEmailCabang as $namaCabang => $paraPenerima) {
-            
+
             $dataKhususCabang = $branchDataGrouped->get($namaCabang);
 
             if ($dataKhususCabang && $dataKhususCabang->isNotEmpty()) {
                 $this->info("Mengirim email rekap ke Cabang: {$namaCabang}...");
-                
+
                 $sendToBranchData = collect([$namaCabang => $dataKhususCabang]);
 
                 Mail::to($paraPenerima)->send(new WeeklyBranchDataMail($sendToBranchData, "Cabang {$namaCabang}"));

@@ -32,7 +32,11 @@ class StockController extends Controller
 
     public function create()
     {
-        return view('admin.stocks.create');
+        $namaMobilOptions = Stock::whereNotNull('nama_mobil')->where('nama_mobil', '!=', '')->distinct()->orderBy('nama_mobil')->pluck('nama_mobil');
+        $kodeMobilOptions = Stock::whereNotNull('kode_mobil')->where('kode_mobil', '!=', '')->distinct()->orderBy('kode_mobil')->pluck('kode_mobil');
+        $warnaOptions = Stock::whereNotNull('warna')->where('warna', '!=', '')->distinct()->orderBy('warna')->pluck('warna');
+
+        return view('admin.stocks.create', compact('namaMobilOptions', 'kodeMobilOptions', 'warnaOptions'));
     }
 
     public function store(Request $request)
@@ -66,6 +70,8 @@ class StockController extends Controller
             'unit' => 'nullable|string|max:255',
         ]);
 
+        $validated['hpp'] = ($validated['harga'] ?? 0) + ($validated['kpt_kf'] ?? 0) + ($validated['acs2'] ?? 0) - ($validated['subsidi'] ?? 0);
+
         Stock::create($validated);
 
         return redirect()->route('admin.stocks.index')
@@ -74,7 +80,11 @@ class StockController extends Controller
 
     public function edit(Stock $stock)
     {
-        return view('admin.stocks.edit', compact('stock'));
+        $namaMobilOptions = Stock::whereNotNull('nama_mobil')->where('nama_mobil', '!=', '')->distinct()->orderBy('nama_mobil')->pluck('nama_mobil');
+        $kodeMobilOptions = Stock::whereNotNull('kode_mobil')->where('kode_mobil', '!=', '')->distinct()->orderBy('kode_mobil')->pluck('kode_mobil');
+        $warnaOptions = Stock::whereNotNull('warna')->where('warna', '!=', '')->distinct()->orderBy('warna')->pluck('warna');
+
+        return view('admin.stocks.edit', compact('stock', 'namaMobilOptions', 'kodeMobilOptions', 'warnaOptions'));
     }
 
     public function update(Request $request, Stock $stock)
@@ -107,6 +117,8 @@ class StockController extends Controller
             'keterangan' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:255',
         ]);
+
+        $validated['hpp'] = ($validated['harga'] ?? 0) + ($validated['kpt_kf'] ?? 0) + ($validated['acs2'] ?? 0) - ($validated['subsidi'] ?? 0);
 
         $stock->update($validated);
 

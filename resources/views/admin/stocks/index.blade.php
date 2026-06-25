@@ -40,11 +40,11 @@
         }
 
         .data-table tbody tr.row-matching {
-            background-color: #fee2e2 !important;
+            background-color: #f3e8ff !important; /* light purple */
         }
 
         .data-table tbody tr.row-matching:hover {
-            background-color: #fecaca !important;
+            background-color: #e9d5ff !important; /* darker purple */
         }
 
         .data-table tbody tr.row-sold {
