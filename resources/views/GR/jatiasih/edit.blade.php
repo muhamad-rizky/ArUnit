@@ -305,11 +305,11 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Nama Konsumen <span style="color:red">*</span></label>
-                        <input type="text" name="nama_konsumen" class="form-input input-blocked" value="{{ old('nama_konsumen', $record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) }}" readonly>
+                        <input type="text" name="nama_konsumen" class="form-input {{ ($record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) ? 'input-blocked' : '' }}" value="{{ old('nama_konsumen', $record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) }}" {{ ($record->nama_konsumen ?? ($record['nama_konsumen'] ?? '')) ? 'readonly' : '' }}>
                     </div>
                     <div class="form-group">
                         <label class="form-label">No. Polisi (Plat) <span style="color:red">*</span></label>
-                        <input type="text" name="no_polisi" class="form-input input-blocked" value="{{ old('no_polisi', $record->no_polisi ?? ($record['no_polisi'] ?? '')) }}" readonly>
+                        <input type="text" name="no_polisi" class="form-input {{ ($record->no_polisi ?? ($record['no_polisi'] ?? '')) ? 'input-blocked' : '' }}" value="{{ old('no_polisi', $record->no_polisi ?? ($record['no_polisi'] ?? '')) }}" {{ ($record->no_polisi ?? ($record['no_polisi'] ?? '')) ? 'readonly' : '' }}>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Kategori SPK <span style="color:red">*</span></label>
