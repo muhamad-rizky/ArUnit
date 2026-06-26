@@ -12,16 +12,18 @@
     <form action="{{ route('admin.stocks.store') }}" method="POST">
         @csrf
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px; margin-bottom:24px;">
-            @php
+            <?php
                 $fields = [
                     'no_do' => ['label' => 'NO DO', 'type' => 'text'],
                     'tanggal_do' => ['label' => 'TANGGAL DO', 'type' => 'date'],
                     'kode_mobil' => ['label' => 'KODE MOBIL', 'type' => 'text'],
                     'nama_mobil' => ['label' => 'NAMA MOBIL', 'type' => 'text'],
-                    'warna' => ['label' => 'WARNA', 'type' => 'text'],
+                    'unit_id' => ['label' => 'UNIT', 'type' => 'select'],
+                    'varian_id' => ['label' => 'VARIAN', 'type' => 'select'],
+                    'warna_id' => ['label' => 'WARNA', 'type' => 'select'],
                     'tahun' => ['label' => 'TAHUN', 'type' => 'number'],
                     'chassis_code' => ['label' => 'CHASSIS CODE', 'type' => 'text'],
-                    'norangka' => ['label' => 'NO RANGKA', 'type' => 'text'],
+                    'norangka' => ['label' => 'NO RANGKA', 'type' => ''],
                     'enginecode' => ['label' => 'ENGINE CODE', 'type' => 'text'],
                     'nomesin' => ['label' => 'NO MESIN', 'type' => 'text'],
                     'faktur' => ['label' => 'FAKTUR', 'type' => 'text'],
@@ -31,17 +33,16 @@
                     'acs2' => ['label' => 'ACS2', 'type' => 'number'],
                     'subsidi' => ['label' => 'SUBSIDI', 'type' => 'number'],
                     'hpp' => ['label' => 'HPP', 'type' => 'number'],
-                    'lokasi' => ['label' => 'LOKASI', 'type' => 'select', 'options' => ['ciawi' => 'Ciawi', 'cianjur' => 'Cianjur', 'cinere' => 'Cinere', 'jatiasih' => 'Jatiasih', 'cikarang' => 'Cikarang', 'tambun' => 'Tambun']],
+                    'gudang_id' => ['label' => 'GUDANG', 'type' => 'select'],
                     'estimasi_unit_masuk_gudang_dca' => ['label' => 'ESTIMASI MASUK GUDANG', 'type' => 'text'],
                     'status' => ['label' => 'STATUS', 'type' => 'select', 'options' => ['free' => 'Free', 'matching' => 'Matching', 'sold' => 'Sold']],
                     'lain_lain' => ['label' => 'LAIN-LAIN', 'type' => 'text'],
                     'penjualan' => ['label' => 'PENJUALAN', 'type' => 'text'],
                     'tanggal_matching_do' => ['label' => 'TANGGAL MATCHING/DO', 'type' => 'date'],
-                    'cabang' => ['label' => 'CABANG', 'type' => 'select', 'options' => ['ciawi' => 'Ciawi', 'cianjur' => 'Cianjur', 'cinere' => 'Cinere', 'jatiasih' => 'Jatiasih', 'ho' => 'HO']],
+                    'cabang_id' => ['label' => 'CABANG', 'type' => 'select'],
                     'keterangan' => ['label' => 'KETERANGAN', 'type' => 'text'],
-                    'unit' => ['label' => 'UNIT', 'type' => 'text'],
                 ];
-            @endphp
+?>            @endphp
 
             @foreach($fields as $name => $field)
                 @php

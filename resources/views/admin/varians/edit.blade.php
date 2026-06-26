@@ -25,10 +25,10 @@
 
 <div class="page-header">
     <div>
-        <h1 class="page-title">Edit Unit</h1>
-        <p class="page-subtitle">Perbarui informasi Unit dengan cepat dan mudah.</p>
+        <h1 class="page-title">Edit Varian</h1>
+        <p class="page-subtitle">Perbarui informasi Varian dengan cepat dan mudah.</p>
     </div>
-    <a href="{{ route('admin.units.index') }}" class="btn-secondary">Kembali</a>
+    <a href="{{ route('admin.varians.index') }}" class="btn-secondary">Kembali</a>
 </div>
 
 @if($errors->any())
@@ -42,12 +42,23 @@
 @endif
 
 <div class="bright-card">
-    <form method="POST" action="{{ route('admin.units.update', $item) }}">
+    <form method="POST" action="{{ route('admin.varians.update', $item) }}">
         @csrf @method('PUT')
         <div class="form-grid">
             <div class="form-group full-width">
-                <label class="form-label">Nama</label>
+                <label class="form-label">Nama Varian</label>
                 <input type="text" name="nama" value="{{ old('nama', $item->nama) }}" class="form-input" required>
+            </div>
+            <div class="form-group full-width">
+                <label class="form-label">Unit</label>
+                <select name="unit_id" class="form-input" required style="background:#fff; color:#0f172a;">
+                    <option value="">-- Pilih Unit --</option>
+                    @foreach($units as $unit)
+                        <option value="{{ $unit->id }}" {{ old('unit_id', $item->unit_id) == $unit->id ? 'selected' : '' }}>
+                            {{ $unit->nama }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group full-width">
                 <label class="form-label">Deskripsi</label>
@@ -56,7 +67,7 @@
         </div>
 
         <div class="modal-footer" style="justify-content:flex-start; padding:0; border:none; margin-top:12px;">
-            <a href="{{ route('admin.units.index') }}" class="btn-secondary" style="margin-right:12px;">Batal</a>
+            <a href="{{ route('admin.varians.index') }}" class="btn-secondary" style="margin-right:12px;">Batal</a>
             <button type="submit" class="btn-primary">Simpan Perubahan</button>
         </div>
     </form>

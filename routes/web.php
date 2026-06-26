@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\VarianController;
 use App\Http\Controllers\WarnaController;
 use App\Http\Controllers\Admin\GudangController;
 use App\Http\Controllers\Admin\CabangController;
@@ -60,6 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('stocks', StockController::class);
         
         Route::resource('units', UnitController::class);
+        Route::resource('varians', VarianController::class);
         Route::resource('warnas', WarnaController::class);
         Route::resource('gudangs', GudangController::class);
         Route::resource('cabangs', CabangController::class);

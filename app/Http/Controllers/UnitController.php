@@ -35,7 +35,7 @@ class UnitController extends Controller
 
         Unit::create($data);
 
-        return redirect()->route('admin.units.index')->with('success', 'Master Varian berhasil dibuat.');
+        return redirect()->route('admin.units.index')->with('success', 'Master Unit berhasil dibuat.');
     }
 
     public function edit(Unit $unit)
@@ -52,12 +52,12 @@ class UnitController extends Controller
 
         $unit->update($data);
 
-        return redirect()->route('admin.units.index')->with('success', 'Master Varian berhasil diperbarui.');
+        return redirect()->route('admin.units.index')->with('success', 'Master Unit berhasil diperbarui.');
     }
 
     public function destroy(Unit $unit)
     {
         $unit->delete();
-        return redirect()->route('admin.units.index')->with('success', 'Master Varian dihapus.');
+        return redirect()->route('admin.units.index')->with('success', 'Master Unit dihapus.');
     }
 }

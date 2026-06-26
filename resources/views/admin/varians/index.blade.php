@@ -3,16 +3,16 @@
 @section('content')
 <style>
     .data-table tbody tr td {
-        color: #334155 !important; /* Mengubah warna teks data menjadi abu-abu gelap agar kontras */
+        color: #334155 !important;
     }
 </style>
 
 <div class="page-header">
     <div>
-        <h1 class="page-title">Data Unit</h1>
-        <p class="page-subtitle">Kelola daftar Unit dengan tampilan yang lebih rapi dan responsif.</p>
+        <h1 class="page-title">Data Varian</h1>
+        <p class="page-subtitle">Kelola daftar Varian dengan tampilan yang lebih rapi dan responsif.</p>
     </div>
-    <a href="{{ route('admin.units.create') }}" class="btn-primary">Buat Unit</a>
+    <a href="{{ route('admin.varians.create') }}" class="btn-primary">Buat Varian</a>
 </div>
 
 @if(session('success'))
@@ -22,13 +22,13 @@
 @endif
 
 <div style="margin-bottom:18px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;">
-    <form method="GET" action="{{ route('admin.units.index') }}" style="display:flex; gap:8px; align-items:center; flex:1; min-width:260px;">
-        <input type="text" name="search" value="{{ old('search', $search ?? '') }}" placeholder="Cari nama Unit..."
+    <form method="GET" action="{{ route('admin.varians.index') }}" style="display:flex; gap:8px; align-items:center; flex:1; min-width:260px;">
+        <input type="text" name="search" value="{{ old('search', $search ?? '') }}" placeholder="Cari nama Varian..."
             style="width:100%; max-width:360px; padding:10px 14px; border-radius:10px; border:1px solid #d1d5db; background:#fff; color:#111827;">
         <button type="submit" class="btn-primary" style="padding:10px 18px;">Cari</button>
     </form>
     @if(!empty($search))
-        <a href="{{ route('admin.units.index') }}" style="color:#0f172a; text-decoration:none; font-weight:600;">Reset</a>
+        <a href="{{ route('admin.varians.index') }}" style="color:#0f172a; text-decoration:none; font-weight:600;">Reset</a>
     @endif
 </div>
 
@@ -39,6 +39,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama</th>
+                    <th>Unit</th>
                     <th>Deskripsi</th>
                     <th class="col-action">Aksi</th>
                 </tr>
@@ -48,19 +49,20 @@
                     <tr>
                         <td>{{ $items->firstItem() + $i }}</td>
                         <td>{{ $item->nama }}</td>
+                        <td>{{ $item->unit?->nama ?? '-' }}</td>
                         <td>{{ $item->deskripsi }}</td>
                         <td>
-                            <a href="{{ route('admin.units.edit', $item) }}" class="btn-primary">Edit</a>
-                            <form action="{{ route('admin.units.destroy', $item) }}" method="POST" style="display:inline-flex; margin-left:8px;">
+                            <a href="{{ route('admin.varians.edit', $item) }}" class="btn-primary">Edit</a>
+                            <form action="{{ route('admin.varians.destroy', $item) }}" method="POST" style="display:inline-flex; margin-left:8px;">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn-secondary" style="background:#ef4444; color:#fff; border:none;">Hapus</button>
+                                <button type="submit" class="btn-secondary" style="background:#ef4444; color:#fff; border:none;" onclick="return confirm('Yakin hapus varian ini?')">Hapus</button>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" style="text-align:center; padding:18px 12px; color: #000; background: #f5f5f5;">
-                            Tidak ada Data Unit untuk ditampilkan.
+                        <td colspan="5" style="text-align:center; padding:18px 12px; color: #000; background: #f5f5f5;">
+                            Tidak ada Data Varian untuk ditampilkan.
                         </td>
                     </tr>
                 @endempty

@@ -39,5 +39,37 @@ class Stock extends Model
         'cabang',
         'keterangan',
         'unit',
+        // foreign keys
+        'unit_id',
+        'varian_id',
+        'warna_id',
+        'gudang_id',
+        'cabang_id',
     ];
+    // Relationships
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
+    public function varian()
+    {
+        return $this->belongsTo(Varian::class, 'varian_id');
+    }
+
+    public function warna()
+    {
+        return $this->belongsTo(Warna::class, 'warna_id');
+    }
+
+    public function gudang()
+    {
+        return $this->belongsTo(Gudang::class, 'gudang_id');
+    }
+
+    public function cabang()
+    {
+        return $this->belongsTo(Cabang::class, 'cabang_id');
+    }
+
 }
