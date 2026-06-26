@@ -16,9 +16,17 @@ return new class extends Migration
                 $table->id();
                 $table->string('no_do')->nullable();
                 $table->date('tanggal_do')->nullable();
+                $table->unsignedBigInteger('unit_id')->nullable();
+                $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null');
+                $table->unsignedBigInteger('varian_id')->nullable();
+                $table->foreign('varian_id')->references('id')->on('varians')->onDelete('set null');
+                $table->unsignedBigInteger('gudang_id')->nullable();
+                $table->foreign('gudang_id')->references('id')->on('gudangs')->onDelete('set null');
+                $table->unsignedBigInteger('cabang_id')->nullable();
+                $table->foreign('cabang_id')->references('id')->on('cabangs')->onDelete('set null');
+                $table->unsignedBigInteger('warna_id')->nullable();
+                $table->foreign('warna_id')->references('id')->on('warnas')->onDelete('set null');
                 $table->string('kode_mobil')->nullable();
-                $table->string('nama_mobil')->nullable();
-                $table->string('warna')->nullable();
                 $table->integer('tahun')->nullable();
                 $table->string('chassis_code')->nullable();
                 $table->string('norangka')->nullable();
@@ -31,7 +39,6 @@ return new class extends Migration
                 $table->bigInteger('acs2')->nullable();
                 $table->bigInteger('subsidi')->nullable();
                 $table->bigInteger('hpp')->nullable();
-                $table->string('lokasi')->nullable();
                 $table->string('estimasi_unit_masuk_gudang_dca')->nullable();
                 $table->string('status')->nullable();
                 $table->string('lain_lain')->nullable();

@@ -9,6 +9,8 @@ use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WarnaController;
+use App\Http\Controllers\Admin\GudangController;
+use App\Http\Controllers\Admin\CabangController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -59,9 +61,9 @@ Route::middleware('auth')->group(function () {
         
         Route::resource('units', UnitController::class);
         Route::resource('warnas', WarnaController::class);
-        Route::get('in-units', function () {
-            return view('admin.stocks.in_unit');
-        })->name('in_units');
+        Route::resource('gudangs', GudangController::class);
+        Route::resource('cabangs', CabangController::class);
+        Route::resource('in-units', \App\Http\Controllers\InUnitController::class);
     });
 
     Route::prefix('dev-tools')->group(function () {

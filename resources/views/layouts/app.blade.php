@@ -254,26 +254,62 @@
                 @endif
 
                 @if(auth()->check() && auth()->user()->is_admin_stock)
-                <div class="nav-group {{ request()->is('admin/stocks*') || request()->is('admin/units*') || request()->is('admin/warnas*') || request()->is('admin/in-units*') ? 'open' : '' }}" id="stockMenu">
-                    <button class="nav-link nav-toggle" onclick="toggleSubmenu('stockMenu')" style="width: 100.2%; text-align: left; background: none; border: none; cursor: pointer; {{ request()->is('admin/stocks*') || request()->is('admin/units*') || request()->is('admin/warnas*') || request()->is('admin/in-units*') ? 'color: var(--accent-red);' : '' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                        <span>Stock</span>
-                    </button>
-                    <div class="nav-submenu">
-                        <a href="{{ url('/admin/stocks') }}" class="nav-sublink {{ request()->is('admin/stocks') ? 'active' : '' }}">Data Stock</a>
-                        
-                        <div style="padding: 12px 12px 4px 12px; font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase;">UNIT</div>
-                        <a href="{{ url('/admin/units') }}" class="nav-sublink {{ request()->is('admin/units*') ? 'active' : '' }}" style="padding-left: 24px;">Varian</a>
-                        <a href="{{ url('/admin/warnas') }}" class="nav-sublink {{ request()->is('admin/warnas*') ? 'active' : '' }}" style="padding-left: 24px;">Warna</a>
-                        
-                        <div style="height: 8px;"></div>
-                        <a href="{{ url('/admin/in-units') }}" class="nav-sublink {{ request()->is('admin/in-units*') ? 'active' : '' }}">IN UNIT</a>
+                    <!-- Stock Link -->
+                    <div class="nav-group {{ request()->is('admin/stocks*') ? 'open' : '' }}" id="stockMenu">
+                        <a href="{{ url('/admin/stocks') }}" class="nav-link {{ request()->is('admin/stocks') ? 'active' : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            <span>Stock</span>
+                        </a>
                     </div>
-                </div>
+
+                    <!-- Unit Dropdown -->
+                    <div class="nav-group {{ request()->is('admin/units*') || request()->is('admin/varians*') || request()->is('admin/warnas*') ? 'open' : '' }}" id="unitMenu">
+                        <button class="nav-link nav-toggle" onclick="toggleSubmenu('unitMenu')" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
+                                <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"></path>
+                            </svg>
+                            <span>Unit</span>
+                        </button>
+                        <div class="nav-submenu">
+                            <a href="{{ url('/admin/units') }}" class="nav-sublink {{ request()->is('admin/units*') ? 'active' : '' }}">Unit</a>
+                            <a href="{{ url('/admin/varians') }}" class="nav-sublink {{ request()->is('admin/varians*') ? 'active' : '' }}">Varian</a>
+                            <a href="{{ url('/admin/warnas') }}" class="nav-sublink {{ request()->is('admin/warnas*') ? 'active' : '' }}">Warna</a>
+                        </div>
+                    </div>
+
+                    <!-- IN UNIT Link -->
+                    <div class="nav-group {{ request()->is('admin/in-units*') ? 'open' : '' }}" id="inUnitMenu">
+                        <a href="{{ url('/admin/in-units') }}" class="nav-link {{ request()->is('admin/in-units*') ? 'active' : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
+                                <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"></path>
+                            </svg>
+                            <span>IN UNIT</span>
+                        </a>
+                    </div>
+
+                    <!-- Gudang Link -->
+                    <div class="nav-group {{ request()->is('admin/gudangs*') ? 'open' : '' }}" id="gudangMenu">
+                        <a href="{{ url('/admin/gudangs') }}" class="nav-link {{ request()->is('admin/gudangs*') ? 'active' : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
+                                <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"></path>
+                            </svg>
+                            <span>Gudang</span>
+                        </a>
+                    </div>
+
+                    <!-- Cabang Link -->
+                    <div class="nav-group {{ request()->is('admin/cabangs*') ? 'open' : '' }}" id="cabangMenu">
+                        <a href="{{ url('/admin/cabangs') }}" class="nav-link {{ request()->is('admin/cabangs*') ? 'active' : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;">
+                                <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"></path>
+                            </svg>
+                            <span>Cabang</span>
+                        </a>
+                    </div>
                 @endif
 
                 @auth
