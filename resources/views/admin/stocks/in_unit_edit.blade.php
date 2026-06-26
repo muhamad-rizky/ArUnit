@@ -4,7 +4,7 @@
 <div class="page-header" style="margin-bottom: 24px;">
     <div>
         <h1 class="page-title">Edit Data IN UNIT</h1>
-        <p class="page-subtitle">Silakan ubah form di bawah ini untuk memperbarui data in unit.</p>
+        <p class="page-subtitle">Silakan ubah form di bawah ini untuk memperbarui data kedatangan unit.</p>
     </div>
 </div>
 
@@ -12,28 +12,112 @@
     <form action="{{ route('admin.in-units.update', $inUnit->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div style="margin-bottom: 16px;">
-            <label for="group_model" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Group Model</label>
-            <input type="text" name="group_model" id="group_model" value="{{ old('group_model', $inUnit->group_model) }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
-            @error('group_model')
-                <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
-            @enderror
+
+        {{-- Row 1: Nama Driver & Tanggal --}}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+                <label for="nama_driver" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Nama Driver <span style="color:#e11d48">*</span></label>
+                <input type="text" name="nama_driver" id="nama_driver" value="{{ old('nama_driver', $inUnit->nama_driver) }}" required
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('nama_driver')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="tanggal" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Tanggal <span style="color:#e11d48">*</span></label>
+                <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal', $inUnit->tanggal ? $inUnit->tanggal->format('Y-m-d') : '') }}" required
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('tanggal')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
 
-        <div style="margin-bottom: 16px;">
-            <label for="sales_model" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Sales Model</label>
-            <input type="text" name="sales_model" id="sales_model" value="{{ old('sales_model', $inUnit->sales_model) }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
-            @error('sales_model')
-                <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
-            @enderror
+        {{-- Row 2: Type & Warna --}}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+                <label for="type" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Type (Unit Yang Diambil) <span style="color:#e11d48">*</span></label>
+                <input type="text" name="type" id="type" value="{{ old('type', $inUnit->type) }}" required
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('type')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="warna" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Warna <span style="color:#e11d48">*</span></label>
+                <input type="text" name="warna" id="warna" value="{{ old('warna', $inUnit->warna) }}" required
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('warna')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
 
-        <div style="margin-bottom: 24px;">
-            <label for="warna" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Warna</label>
-            <input type="text" name="warna" id="warna" value="{{ old('warna', $inUnit->warna) }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
-            @error('warna')
-                <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
-            @enderror
+        {{-- Row 3: No Rangka & No Mesin --}}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+                <label for="no_rangka" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">No. Rangka</label>
+                <input type="text" name="no_rangka" id="no_rangka" value="{{ old('no_rangka', $inUnit->no_rangka) }}"
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('no_rangka')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="no_mesin" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">No. Mesin</label>
+                <input type="text" name="no_mesin" id="no_mesin" value="{{ old('no_mesin', $inUnit->no_mesin) }}"
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('no_mesin')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        {{-- Row 4: Lokasi Pengambilan & Cabang --}}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+                <label for="lokasi_pengambilan" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Lokasi Pengambilan</label>
+                <input type="text" name="lokasi_pengambilan" id="lokasi_pengambilan" value="{{ old('lokasi_pengambilan', $inUnit->lokasi_pengambilan) }}"
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('lokasi_pengambilan')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="cabang_id" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Cabang</label>
+                <select name="cabang_id" id="cabang_id"
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: white;">
+                    <option value="">-- Pilih Cabang --</option>
+                    @foreach($cabangs as $cabang)
+                        <option value="{{ $cabang->id }}" {{ old('cabang_id', $inUnit->cabang_id) == $cabang->id ? 'selected' : '' }}>
+                            {{ $cabang->nama }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('cabang_id')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        {{-- Row 5: Cekits & Jam Kedatangan --}}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div>
+                <label for="cekits" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Cekits</label>
+                <input type="text" name="cekits" id="cekits" value="{{ old('cekits', $inUnit->cekits) }}"
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('cekits')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="jam_kedatangan" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">Jam Kedatangan</label>
+                <input type="time" name="jam_kedatangan" id="jam_kedatangan" value="{{ old('jam_kedatangan', $inUnit->jam_kedatangan) }}"
+                    style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                @error('jam_kedatangan')
+                    <div style="color: #e11d48; font-size: 12px; margin-top: 4px;">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
 
         <div style="display: flex; gap: 12px;">
