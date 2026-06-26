@@ -17,6 +17,7 @@ class Stock extends Model
         'tanggal_do',
         'kode_mobil',
         'nama_mobil',
+        'varian',
         'warna',
         'tahun',
         'chassis_code',

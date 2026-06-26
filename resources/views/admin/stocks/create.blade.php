@@ -12,18 +12,17 @@
     <form action="{{ route('admin.stocks.store') }}" method="POST">
         @csrf
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px; margin-bottom:24px;">
-            <?php
+            @php
                 $fields = [
                     'no_do' => ['label' => 'NO DO', 'type' => 'text'],
                     'tanggal_do' => ['label' => 'TANGGAL DO', 'type' => 'date'],
                     'kode_mobil' => ['label' => 'KODE MOBIL', 'type' => 'text'],
-                    'nama_mobil' => ['label' => 'NAMA MOBIL', 'type' => 'text'],
-                    'unit_id' => ['label' => 'UNIT', 'type' => 'select'],
-                    'varian_id' => ['label' => 'VARIAN', 'type' => 'select'],
-                    'warna_id' => ['label' => 'WARNA', 'type' => 'select'],
+                    'nama_mobil' => ['label' => 'NAMA MOBIL', 'type' => 'select', 'options' => $namaMobilOptions ?? []],
+                    'varian' => ['label' => 'VARIAN', 'type' => 'select', 'options' => $varianOptions ?? []],
+                    'warna' => ['label' => 'WARNA', 'type' => 'select', 'options' => $warnaOptions ?? []],
                     'tahun' => ['label' => 'TAHUN', 'type' => 'number'],
                     'chassis_code' => ['label' => 'CHASSIS CODE', 'type' => 'text'],
-                    'norangka' => ['label' => 'NO RANGKA', 'type' => ''],
+                    'norangka' => ['label' => 'NO RANGKA', 'type' => 'text'],
                     'enginecode' => ['label' => 'ENGINE CODE', 'type' => 'text'],
                     'nomesin' => ['label' => 'NO MESIN', 'type' => 'text'],
                     'faktur' => ['label' => 'FAKTUR', 'type' => 'text'],
@@ -33,16 +32,16 @@
                     'acs2' => ['label' => 'ACS2', 'type' => 'number'],
                     'subsidi' => ['label' => 'SUBSIDI', 'type' => 'number'],
                     'hpp' => ['label' => 'HPP', 'type' => 'number'],
-                    'gudang_id' => ['label' => 'GUDANG', 'type' => 'select'],
+                    'lokasi' => ['label' => 'GUDANG', 'type' => 'select', 'options' => $gudangOptions ?? []],
                     'estimasi_unit_masuk_gudang_dca' => ['label' => 'ESTIMASI MASUK GUDANG', 'type' => 'text'],
                     'status' => ['label' => 'STATUS', 'type' => 'select', 'options' => ['free' => 'Free', 'matching' => 'Matching', 'sold' => 'Sold']],
                     'lain_lain' => ['label' => 'LAIN-LAIN', 'type' => 'text'],
                     'penjualan' => ['label' => 'PENJUALAN', 'type' => 'text'],
                     'tanggal_matching_do' => ['label' => 'TANGGAL MATCHING/DO', 'type' => 'date'],
-                    'cabang_id' => ['label' => 'CABANG', 'type' => 'select'],
+                    'cabang' => ['label' => 'CABANG', 'type' => 'select', 'options' => $cabangOptions ?? []],
                     'keterangan' => ['label' => 'KETERANGAN', 'type' => 'text'],
                 ];
-?>            @endphp
+            @endphp
 
             @foreach($fields as $name => $field)
                 @php
@@ -52,19 +51,7 @@
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
 
-                    @if(in_array($name, ['nama_mobil', 'warna']))
-                        @php
-                            $options = [];
-                            if ($name === 'nama_mobil') $options = $namaMobilOptions ?? [];
-                            if ($name === 'warna') $options = $warnaOptions ?? [];
-                        @endphp
-                        <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
-                            <option value="">-- Pilih {{ $field['label'] }} --</option>
-                            @foreach($options as $val)
-                                <option value="{{ $val }}" {{ old($name) == $val ? 'selected' : '' }}>{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    @elseif(isset($field['type']) && $field['type'] === 'select')
+                    @if(isset($field['type']) && $field['type'] === 'select')
                         <select name="{{ $name }}" id="{{ $name }}" style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
                             <option value="">-- Pilih {{ $field['label'] }} --</option>
                             @foreach($field['options'] as $val => $text)

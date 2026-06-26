@@ -40,11 +40,11 @@ class StockController extends Controller
 
     public function create()
     {
-        $namaMobilOptions = Unit::orderBy('nama')->pluck('nama', 'id');
-        $warnaOptions = Warna::orderBy('nama')->pluck('nama', 'id');
-        $varianOptions = Varian::orderBy('nama')->pluck('nama', 'id');
-        $gudangOptions = Gudang::orderBy('nama')->pluck('nama', 'id');
-        $cabangOptions = Cabang::orderBy('nama')->pluck('nama', 'id');
+        $namaMobilOptions = Unit::orderBy('nama')->pluck('nama', 'nama');
+        $warnaOptions = Warna::orderBy('nama')->pluck('nama', 'nama');
+        $varianOptions = Varian::orderBy('nama')->pluck('nama', 'nama');
+        $gudangOptions = Gudang::orderBy('nama')->pluck('nama', 'nama');
+        $cabangOptions = Cabang::orderBy('nama')->pluck('nama', 'nama');
 
         return view('admin.stocks.create', compact('namaMobilOptions', 'warnaOptions', 'varianOptions', 'gudangOptions', 'cabangOptions'));
     }
@@ -78,6 +78,7 @@ class StockController extends Controller
             'cabang' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:255',
+            'varian' => 'nullable|string|max:255',
         ]);
 
         $validated['hpp'] = ($validated['harga'] ?? 0) + ($validated['kpt_kf'] ?? 0) + ($validated['acs2'] ?? 0) - ($validated['subsidi'] ?? 0);
@@ -90,11 +91,11 @@ class StockController extends Controller
 
     public function edit(Stock $stock)
     {
-        $namaMobilOptions = Unit::orderBy('nama')->pluck('nama', 'id');
-        $warnaOptions = Warna::orderBy('nama')->pluck('nama', 'id');
-        $varianOptions = Varian::orderBy('nama')->pluck('nama', 'id');
-        $gudangOptions = Gudang::orderBy('nama')->pluck('nama', 'id');
-        $cabangOptions = Cabang::orderBy('nama')->pluck('nama', 'id');
+        $namaMobilOptions = Unit::orderBy('nama')->pluck('nama', 'nama');
+        $warnaOptions = Warna::orderBy('nama')->pluck('nama', 'nama');
+        $varianOptions = Varian::orderBy('nama')->pluck('nama', 'nama');
+        $gudangOptions = Gudang::orderBy('nama')->pluck('nama', 'nama');
+        $cabangOptions = Cabang::orderBy('nama')->pluck('nama', 'nama');
 
         return view('admin.stocks.edit', compact('stock', 'namaMobilOptions', 'warnaOptions', 'varianOptions', 'gudangOptions', 'cabangOptions'));
     }
@@ -128,11 +129,7 @@ class StockController extends Controller
             'cabang' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:255',
-            'unit_id' => 'nullable|exists:units,id',
-            'varian_id' => 'nullable|exists:varians,id',
-            'warna_id' => 'nullable|exists:warnas,id',
-            'gudang_id' => 'nullable|exists:gudangs,id',
-            'cabang_id' => 'nullable|exists:cabangs,id',
+            'varian' => 'nullable|string|max:255',
         ]);
 
         $validated['hpp'] = ($validated['harga'] ?? 0) + ($validated['kpt_kf'] ?? 0) + ($validated['acs2'] ?? 0) - ($validated['subsidi'] ?? 0);

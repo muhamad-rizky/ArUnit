@@ -18,8 +18,9 @@
                     'no_do' => ['label' => 'NO DO', 'type' => 'text'],
                     'tanggal_do' => ['label' => 'TANGGAL DO', 'type' => 'date'],
                     'kode_mobil' => ['label' => 'KODE MOBIL', 'type' => 'text'],
-                    'nama_mobil' => ['label' => 'NAMA MOBIL', 'type' => 'text'],
-                    'warna' => ['label' => 'WARNA', 'type' => 'text'],
+                    'nama_mobil' => ['label' => 'NAMA MOBIL', 'type' => 'select', 'options' => $namaMobilOptions ?? []],
+                    'varian' => ['label' => 'VARIAN', 'type' => 'select', 'options' => $varianOptions ?? []],
+                    'warna' => ['label' => 'WARNA', 'type' => 'select', 'options' => $warnaOptions ?? []],
                     'tahun' => ['label' => 'TAHUN', 'type' => 'number'],
                     'chassis_code' => ['label' => 'CHASSIS CODE', 'type' => 'text'],
                     'norangka' => ['label' => 'NO RANGKA', 'type' => 'text'],
@@ -32,22 +33,21 @@
                     'acs2' => ['label' => 'ACS2', 'type' => 'number'],
                     'subsidi' => ['label' => 'SUBSIDI', 'type' => 'number'],
                     'hpp' => ['label' => 'HPP', 'type' => 'number'],
-                    'lokasi' => ['label' => 'LOKASI', 'type' => 'select', 'options' => ['ciawi' => 'Ciawi', 'cianjur' => 'Cianjur', 'cinere' => 'Cinere', 'jatiasih' => 'Jatiasih', 'cikarang' => 'Cikarang', 'tambun' => 'Tambun']],
+                    'lokasi' => ['label' => 'LOKASI', 'type' => 'select', 'options' => $gudangOptions ?? []],
                     'estimasi_unit_masuk_gudang_dca' => ['label' => 'ESTIMASI MASUK GUDANG', 'type' => 'text'],
                     'status' => ['label' => 'STATUS', 'type' => 'select', 'options' => ['free' => 'Free', 'matching' => 'Matching', 'sold' => 'Sold']],
                     'lain_lain' => ['label' => 'LAIN-LAIN', 'type' => 'text'],
                     'penjualan' => ['label' => 'PENJUALAN', 'type' => 'text'],
                     'tanggal_matching_do' => ['label' => 'TANGGAL MATCHING/DO', 'type' => 'date'],
-                    'cabang' => ['label' => 'CABANG', 'type' => 'select', 'options' => ['ciawi' => 'Ciawi', 'cianjur' => 'Cianjur', 'cinere' => 'Cinere', 'jatiasih' => 'Jatiasih', 'ho' => 'HO']],
+                    'cabang' => ['label' => 'CABANG', 'type' => 'select', 'options' => $cabangOptions ?? []],
                     'keterangan' => ['label' => 'KETERANGAN', 'type' => 'text'],
-                    'unit' => ['label' => 'UNIT', 'type' => 'text'],
                 ];
             @endphp
 
             @php
                 $editableFields = [
                     'faktur', 'bln_naik_faktur', 'penjualan', 'tanggal_matching_do',
-                    'cabang', 'status', 'keterangan', 'unit', 'lokasi'
+                    'cabang', 'status', 'keterangan', 'unit', 'lokasi', 'nama_mobil', 'varian', 'warna'
                 ];
             @endphp
 
@@ -61,22 +61,7 @@
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
                     
-                    @if(in_array($name, ['nama_mobil', 'warna']))
-                        @php
-                            $options = [];
-                            if ($name === 'nama_mobil') $options = $namaMobilOptions ?? [];
-                            if ($name === 'warna') $options = $warnaOptions ?? [];
-                        @endphp
-                        @if(!$isEditable)
-                            <input type="hidden" name="{{ $name }}" value="{{ old($name, $stock->$name) }}">
-                        @endif
-                        <select {{ $isEditable ? 'name='.$name : '' }} id="{{ $name }}" {{ $disabledAttr }} style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
-                            <option value="">-- Pilih {{ $field['label'] }} --</option>
-                            @foreach($options as $val)
-                                <option value="{{ $val }}" {{ old($name, $stock->$name) == $val ? 'selected' : '' }}>{{ $val }}</option>
-                            @endforeach
-                        </select>
-                    @elseif(isset($field['type']) && $field['type'] === 'select')
+                    @if(isset($field['type']) && $field['type'] === 'select')
                         @if(!$isEditable)
                             <input type="hidden" name="{{ $name }}" value="{{ old($name, $stock->$name) }}">
                         @endif
