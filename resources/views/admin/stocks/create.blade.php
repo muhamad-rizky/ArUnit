@@ -51,7 +51,7 @@
                 @endphp
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     <label for="{{ $name }}" style="font-size:13px; font-weight:600; color:#475569;">{{ $field['label'] }}</label>
-                    
+
                     @if(in_array($name, ['nama_mobil', 'warna']))
                         @php
                             $options = [];
@@ -75,7 +75,7 @@
                         <input type="{{ $field['type'] }}" name="{{ $name }}" id="{{ $name }}" value="{{ old($name) }}"
                                {{ $readonlyAttr }} style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-size:14px; color:#1e293b; width:100%; box-sizing:border-box; background:{{ $bgColor }};">
                     @endif
-                    
+
                     @error($name)
                         <span style="color:#ef4444; font-size:12px;">{{ $message }}</span>
                     @enderror
