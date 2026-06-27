@@ -294,7 +294,7 @@
                         <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.08);bottom:-20px;left:-20px;"></div>
 
                         {{-- total badge --}}
-                        <div style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(8px);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,0.4);">
+                        <div style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(8px);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,0.4); z-index: 10;">
                             {{ $mobil->total }} Unit
                         </div>
 
@@ -322,11 +322,11 @@
                         {{-- Varian --}}
                         <div style="margin-bottom:10px;">
                             <div style="font-size:11px;font-weight:600;color:#94a3b8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Varian</div>
-                            @if(count($mobil->varians) > 0)
+                            @if(count($mobil->varian_counts) > 0)
                                 <div style="display:flex;flex-wrap:wrap;gap:4px;">
-                                    @foreach($mobil->varians as $v)
+                                    @foreach($mobil->varian_counts as $v => $count)
                                         <span style="background:#f1f5f9;color:#475569;font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;border:1px solid #e2e8f0;">
-                                            {{ $v }}
+                                            {{ $v }} ({{ $count }})
                                         </span>
                                     @endforeach
                                 </div>
@@ -338,11 +338,11 @@
                         {{-- Warna --}}
                         <div>
                             <div style="font-size:11px;font-weight:600;color:#94a3b8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Warna</div>
-                            @if(count($mobil->warnas) > 0)
+                            @if(count($mobil->warna_counts) > 0)
                                 <div style="display:flex;flex-wrap:wrap;gap:4px;">
-                                    @foreach($mobil->warnas as $w)
+                                    @foreach($mobil->warna_counts as $w => $count)
                                         <span style="background:#f1f5f9;color:#475569;font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;border:1px solid #e2e8f0;">
-                                            {{ $w }}
+                                            {{ $w }} ({{ $count }})
                                         </span>
                                     @endforeach
                                 </div>
