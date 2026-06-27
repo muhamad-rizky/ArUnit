@@ -34,8 +34,16 @@ class StockController extends Controller
             });
         }
 
+        $lokasiFilter = $request->input('lokasi');
+        if ($lokasiFilter) {
+            $query->where('lokasi', $lokasiFilter);
+        }
+
         $items = $query->latest()->paginate(15);
-        return view('admin.stocks.index', compact('items', 'search'));
+        
+        $gudangOptions = \App\Models\Gudang::orderBy('nama')->pluck('nama', 'nama');
+        
+        return view('admin.stocks.index', compact('items', 'search', 'lokasiFilter', 'gudangOptions'));
     }
 
     public function create()

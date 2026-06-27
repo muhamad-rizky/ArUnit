@@ -244,9 +244,17 @@
             style="display:flex; gap:12px; align-items:center; flex:1; min-width:260px;">
             <input type="text" name="search" class="search-input" value="{{ old('search', $search ?? '') }}"
                 placeholder="Cari No DO, Nama Mobil, No Rangka...">
+            <select name="lokasi" class="search-input" style="max-width: 200px; padding: 10px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; color: #0f172a;" onchange="this.form.submit()">
+                <option value="">Semua Lokasi</option>
+                @if(isset($gudangOptions))
+                    @foreach($gudangOptions as $gudang)
+                        <option value="{{ $gudang }}" {{ request('lokasi') == $gudang ? 'selected' : '' }}>{{ $gudang }}</option>
+                    @endforeach
+                @endif
+            </select>
             <button type="submit" class="btn-search">Cari</button>
         </form>
-        @if (!empty($search))
+        @if (!empty($search) || request()->has('lokasi') && request('lokasi') != '')
             <a href="{{ route('admin.stocks.index') }}"
                 style="color:#ef4444; text-decoration:none; font-weight:600; padding: 8px 12px; border-radius: 6px; transition: background 0.2s;"
                 onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='transparent'">
@@ -278,7 +286,27 @@
                     <th>ACS2</th>
                     <th>SUBSIDI</th>
                     <th>HPP</th>
-                    <th>LOKASI</th>
+                    <th style="position: relative;">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            LOKASI
+                            <div style="position:relative; width:20px; height:20px; display:flex; align-items:center; justify-content:center;">
+                                <i class="fas fa-filter" style="font-size: 0.8rem; color: {{ request('lokasi') ? '#10b981' : '#cbd5e1' }}; transition: color 0.2s;"></i>
+                                <form method="GET" action="{{ route('admin.stocks.index') }}" style="margin: 0; position: absolute; top:0; left:0; width:100%; height:100%;">
+                                    @if(request('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+                                    <select name="lokasi" onchange="this.form.submit()" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; -webkit-appearance: none; appearance: none; color: #000;">
+                                        <option value="">Semua Lokasi</option>
+                                        @if(isset($gudangOptions))
+                                            @foreach($gudangOptions as $gudang)
+                                                <option value="{{ $gudang }}" {{ request('lokasi') == $gudang ? 'selected' : '' }}>{{ $gudang }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                    </th>
                     <th>ESTIMASI MASUK GUDANG</th>
                     <th>STATUS</th>
                     <th>LAIN-LAIN</th>

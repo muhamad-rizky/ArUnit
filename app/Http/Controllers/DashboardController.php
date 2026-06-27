@@ -73,11 +73,11 @@ class DashboardController extends Controller
                 ->toArray();
             $imageMap = [
                 'NEW CARRY'     => 'Suzuki-Carry.webp',
-                'APV'           => 'Suzuki-Apv.webp',
+                'APV'           => 'Suzuki-Apv.png',
                 'ERTIGA-HYBRID' => 'Suzuki-Ertiga-Hybrid.webp',
                 'XL7-HYBRID'    => 'XL7_Hybrid.webp',
                 'GRAND-VITARA'  => 'Grand-Vitara.webp',
-                'JIMMY'         => 'Jimmy.webp',
+                'JIMMY'         => 'Jimmy.png',
                 'FRONX'         => 'suzuki-fronx.png',
             ];
 
@@ -102,6 +102,8 @@ class DashboardController extends Controller
                     'total'         => $group->count(),
                     'varian_counts' => $varianCounts,
                     'warna_counts'  => $warnaCounts,
+                    'varians'       => $varianCounts->keys(),
+                    'warnas'        => $warnaCounts->keys(),
                     'image'         => $imageFile,
                 ];
             })->sortByDesc('total')->values();
