@@ -264,6 +264,7 @@
                     <th>TANGGAL DO</th>
                     <th>KODE MOBIL</th>
                     <th>NAMA MOBIL</th>
+                    <th>VARIAN</th>
                     <th>WARNA</th>
                     <th>TAHUN</th>
                     <th>CHASSIS CODE</th>
@@ -330,6 +331,7 @@
 
                         <td>{{ $item->kode_mobil }}</td>
                         <td style="font-weight: 500;">{{ $item->nama_mobil }}</td>
+                        <td>{{ $item->varian }}</td>
                         <td>{{ $item->warna }}</td>
                         <td style="text-align: center;">{{ $item->tahun }}</td>
                         <td>{{ $item->chassis_code }}</td>

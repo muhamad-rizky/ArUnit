@@ -71,12 +71,40 @@ class DashboardController extends Controller
                 ->groupBy('status_lower')
                 ->pluck('total', 'status_lower')
                 ->toArray();
-            $stockByMobil = Stock::selectRaw('nama_mobil, COUNT(*) as total')
-                ->whereNotNull('nama_mobil')
-                ->where('nama_mobil', '!=', '')
-                ->groupBy('nama_mobil')
-                ->orderByDesc('total')
-                ->get();
+            $imageMap = [
+                'NEW CARRY'     => 'Suzuki-Carry.webp',
+                'APV'           => 'Suzuki-Apv.webp',
+                'ERTIGA-HYBRID' => 'Suzuki-Ertiga-Hybrid.webp',
+                'XL7-HYBRID'    => 'XL7_Hybrid.webp',
+                'GRAND-VITARA'  => 'Grand-Vitara.webp',
+                'JIMMY'         => 'Jimmy.webp',
+                'FRONX'         => 'suzuki-fronx.png',
+            ];
+
+            // Ambil semua stock, lalu kelompokkan per nama_mobil
+            $rawStocks  = Stock::whereNotNull('nama_mobil')->where('nama_mobil', '!=', '')->get();
+            $groupedByMobil = $rawStocks->groupBy('nama_mobil');
+
+            // Bangun dari imageMap agar semua mobil selalu tampil (walaupun stok = 0)
+            $stockByMobil = collect($imageMap)->map(function ($imageFile, $namaMobil) use ($groupedByMobil) {
+                $group = $groupedByMobil->get($namaMobil, collect());
+
+                $varianCounts = $group->whereNotNull('varian')
+                    ->groupBy('varian')
+                    ->map(fn($g) => $g->count());
+
+                $warnaCounts = $group->whereNotNull('warna')
+                    ->groupBy('warna')
+                    ->map(fn($g) => $g->count());
+
+                return (object)[
+                    'nama_mobil'    => $namaMobil,
+                    'total'         => $group->count(),
+                    'varian_counts' => $varianCounts,
+                    'warna_counts'  => $warnaCounts,
+                    'image'         => $imageFile,
+                ];
+            })->sortByDesc('total')->values();
         }
 
         return view('dashboard', [

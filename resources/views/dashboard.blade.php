@@ -246,7 +246,7 @@
                 <div class="stat-value" style="color:#ef4444;">{{ $stockByStatus['matching'] ?? 0 }}</div>
                 <div class="stat-label">Stock Matching</div>
             </div>
-            
+
             <div class="stat-card">
                 <div class="stat-icon" style="background:rgba(139,92,246,.15); display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-handshake" style="color: #8b5cf6; font-size: 1.5rem;"></i>
@@ -256,30 +256,108 @@
             </div>
         </div>
 
-        <div class="table-container" style="padding:24px; margin-top:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin-bottom:8px;">Jenis Mobil (Stock)</h2>
-            <p style="margin-bottom:16px;color:#6b7280;font-size:13px;">Ringkasan jumlah stock berdasarkan nama/jenis mobil.</p>
-            <div style="overflow-x:auto;">
-                <table style="width:100%;border-collapse:collapse;min-width:420px;">
-                    <thead>
-                        <tr style="background:#f9fafb;">
-                            <th style="text-align:left;padding:12px 10px;font-size:12px;color:#4b5563;border-bottom:1px solid #e5e7eb;">Nama/Jenis Mobil</th>
-                            <th style="text-align:right;padding:12px 10px;font-size:12px;color:#4b5563;border-bottom:1px solid #e5e7eb;">Total Unit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($stockByMobil ?? [] as $mobil)
-                            <tr style="border-bottom:1px solid #e5e7eb;">
-                                <td style="padding:14px 10px;font-size:13px;color:#111827;font-weight:500;">{{ $mobil->nama_mobil }}</td>
-                                <td style="padding:14px 10px;font-size:13px;color:#111827;text-align:right;">{{ $mobil->total }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="2" style="padding:16px 10px;text-align:center;color:#6b7280;">Tidak ada data mobil.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div style="margin-top: 28px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                <div>
+                    <h2 style="font-size:18px;font-weight:700;color:#0f172a;margin:0 0 4px;">Jenis Mobil (Stock)</h2>
+                    <p style="margin:0;color:#64748b;font-size:13px;">Ringkasan jumlah stock berdasarkan nama/jenis mobil.</p>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:20px;">
+                @forelse($stockByMobil ?? [] as $mobil)
+                @php
+                    $gradients = [
+                        'NEW CARRY'     => 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        'APV'           => 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        'ERTIGA-HYBRID' => 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                        'XL7-HYBRID'    => 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                        'GRAND-VITARA'  => 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                        'JIMMY'         => 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+                        'FRONX'         => 'linear-gradient(135deg, #fccb90 0%, #d57eeb 100%)',
+                    ];
+                    $grad = $gradients[$mobil->nama_mobil] ?? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                @endphp
+                <div style="
+                    background:#ffffff;
+                    border-radius:20px;
+                    overflow:hidden;
+                    box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+                    transition: transform 0.25s ease, box-shadow 0.25s ease;
+                    position:relative;
+                " onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)';">
+
+                    {{-- Header gradient with image --}}
+                    <div style="height:160px; background:{{ $grad }}; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                        {{-- decorative circles --}}
+                        <div style="position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.1);top:-30px;right:-30px;"></div>
+                        <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.08);bottom:-20px;left:-20px;"></div>
+
+                        {{-- total badge --}}
+                        <div style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(8px);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,0.4);">
+                            {{ $mobil->total }} Unit
+                        </div>
+
+                        @if($mobil->image)
+                            <img src="{{ asset('assets/' . $mobil->image) }}"
+                                 alt="{{ $mobil->nama_mobil }}"
+                                 style="max-height:130px; max-width:85%; object-fit:contain; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.3));"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div style="display:none; flex-direction:column; align-items:center; color:rgba(255,255,255,0.8);">
+                                <i class="fas fa-car" style="font-size:3rem; margin-bottom:6px;"></i>
+                            </div>
+                        @else
+                            <div style="display:flex; flex-direction:column; align-items:center; color:rgba(255,255,255,0.8);">
+                                <i class="fas fa-car" style="font-size:3rem; margin-bottom:6px;"></i>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- Body --}}
+                    <div style="padding:18px 20px 20px;">
+                        <h3 style="font-size:16px;font-weight:700;color:#0f172a;margin:0 0 14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            {{ $mobil->nama_mobil }}
+                        </h3>
+
+                        {{-- Varian --}}
+                        <div style="margin-bottom:10px;">
+                            <div style="font-size:11px;font-weight:600;color:#94a3b8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Varian</div>
+                            @if(count($mobil->varians) > 0)
+                                <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                                    @foreach($mobil->varians as $v)
+                                        <span style="background:#f1f5f9;color:#475569;font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;border:1px solid #e2e8f0;">
+                                            {{ $v }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @else
+                                <span style="color:#94a3b8;font-size:12px;">-</span>
+                            @endif
+                        </div>
+
+                        {{-- Warna --}}
+                        <div>
+                            <div style="font-size:11px;font-weight:600;color:#94a3b8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">Warna</div>
+                            @if(count($mobil->warnas) > 0)
+                                <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                                    @foreach($mobil->warnas as $w)
+                                        <span style="background:#f1f5f9;color:#475569;font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;border:1px solid #e2e8f0;">
+                                            {{ $w }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @else
+                                <span style="color:#94a3b8;font-size:12px;">-</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @empty
+                    <div style="grid-column:1/-1;text-align:center;padding:60px 24px;background:#f8fafc;border-radius:16px;border:2px dashed #e2e8f0;">
+                        <i class="fas fa-car" style="font-size:2.5rem;color:#cbd5e1;margin-bottom:12px;display:block;"></i>
+                        <div style="color:#94a3b8;font-size:15px;">Belum ada data stock mobil.</div>
+                    </div>
+                @endforelse
             </div>
         </div>
     @endif
